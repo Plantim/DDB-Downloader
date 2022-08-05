@@ -1,6 +1,10 @@
 # DDB-Downloader
 Script python pour télécharger la base de donnée de Dofusdb.fr
 
+## Pré-requis
+
+Installer pip3 (en cours de simplification)
+
 ## Utilisation
 
 Entrez le nom d'une catégorie présente dans la liste (ci-dessous) ou écrivez "all" pour toutes les télécharger.
