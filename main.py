@@ -7,6 +7,7 @@ import json
 import sys
 import configparser
 from utils import * #permet de faire des opérations sur les fichiers
+from tqdm import tqdm
 
 config = configparser.ConfigParser()
 config.read('config.ini')
