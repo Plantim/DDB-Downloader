@@ -54,7 +54,9 @@ def download_json(url,nb_element_max,donnees,categorie):
         os.system('cls' if system_name().lower()=='windows' else 'clear')
         progression = round(i*100/nb_element_max,2)
         print(f"Catégorie {categorie} extraite à : {progression} %\n")
-        
+    
+    os.system('cls' if system_name().lower()=='windows' else 'clear')
+    
     donnees.pop("skip")
     donnees.pop("limit")
     return donnees
