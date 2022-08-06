@@ -6,7 +6,6 @@
 import json
 import sys
 import configparser
-from ast import literal_eval
 from utils import * #permet de faire des opérations sur les fichiers
 
 config = configparser.ConfigParser()
@@ -17,10 +16,15 @@ categorie = config['DEFAULT']['categorie'] #Catégorie à extraire
 
 
 def run(categorie):
+    """
+    Fonction principale
+    categorie : catégorie à extraire list
+    output : longueur du json int
+    """
     url = "https://api.dofusdb.fr/" + categorie + "?$limit=50&$skip=" #reconstitue l'url
-    nb_element_max = requests.get(url).json()['total'] #Détermine le nombre d'élément max dans la catégorie choisie
-    donnees = download_json(url,nb_element_max) #Télécharge les json de la catégorie
-    finaljson = fusion_json(nb_element_max,donnees) #fusionne tous les json
+    donnees = requests.get(url).json()
+    nb_element_max = donnees["total"] #Détermine le nombre d'élément max dans la catégorie choisie
+    finaljson = download_json(url,nb_element_max,donnees) #Télécharge les json de la catégorie
     #Crée un dossier output s'il n'existe pas
     if not os.path.exists(output_path):
         os.makedirs(output_path)
