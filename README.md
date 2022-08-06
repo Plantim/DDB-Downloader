@@ -1,40 +1,38 @@
 # DDB-Downloader
-Script python pour télécharger la base de donnée de Dofusdb.fr
+Script python pour télécharger la base de donnée de [Dofusdb.fr](https://dofusdb.fr/)
 
 ## Pré-requis
 
-Installer la librairie "requests" et "tqdm"
+Installer les librairies "requests" et "tqdm"
 
 ### Utilisateur Windows :
-- Lancer l'invite de commande (touche Windows + R)
+- Lancer l'invite de commandes (touche Windows + R)
 - Ecrire "cmd"
-- Ecrire "pip install requests"
-- Ecrire "pip install tqdm"
-
-- s'il est indiqué : 'pip' n'est pas reconnu en tant que commande interne ou externe, un programme exécutable ou un fichier de commandes.
-- Il faudra installer python, 
-- Ecrire "python"
-- Une fenêtre microsoft store s'ouvre, cliquer sur "installer"
-- une fois installé, recommencer les étapes précédentes
-
+- Ecrire `pip install requests`
+  - S'il est indiqué : `pip' n'est pas reconnu en tant que commande interne ou externe, un programme exécutable ou un fichier de commandes`
+  - Il faudra installer la dernière version de python3 depuis le Microsoft Store 
+- Ecrire `pip install tqdm`
 
 ### Utilisateur MacOS :
-- installer python normalement depuis le site : https://www.python.org/ftp/python/3.10.6/python-3.10.6-macos11.pkg
-- Ecrire "pip install request"
-- Ecrire "pip install tqdm"
+- Installer python3 depuis le site : [https://www.python.org/downloads/](https://www.python.org/downloads/)
+- Ouvrir le terminal (Commande ⌘ + Espace, et écrire "terminal" ; ou depuis le launchpad puis écrire "terminal" dans la barre de recherche)
+- Ecrire `pip install requests`
+- Ecrire `pip install tqdm`
 
 
 ## Utilisation
 
-Entrez le nom d'une catégorie présente dans la liste (ci-dessous) ou écrivez "all" pour toutes les télécharger.
+Démarer le main.py
+
+Entrer le nom d'une catégorie présente dans la liste (ci-dessous) ou écrire "all" pour toutes les télécharger.
 
 ## Fonctionnement
 
 Le script téléchargera tous les fichiers json liés à la catégorie puis les compilera pour n'en former qu'un.
 
-Les fichiers json seront enregistrés dans le dossier "output" qui sera créé dans le même répertoire que le script !
+Les fichiers json seront enregistrés dans le dossier "output" (modifiable dans le config.ini) qui sera créé dans le même répertoire que le script !
 
-## Liste
+## Liste des catégories prises en charge
 
 - achievements
 - achievement-categories
