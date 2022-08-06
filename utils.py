@@ -1,9 +1,6 @@
-from urllib import response
 import requests #pour requête web
 from platform   import system as system_name  # Returns the system/OS name
 import os #permet d'utiliser des commandes, sert pour clear_screen
-from tqdm import tqdm #pour afficher la progression
-import json
 
 class Colored():
 
