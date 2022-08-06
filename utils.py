@@ -43,13 +43,18 @@ def check_categorie(CAT):
 
 
 #Télécharge les json de la catégorie
-def download_json(url,nb_element_max,donnees):
+def download_json(url,nb_element_max,donnees,categorie):
     #Liste pour la fusion json
     #Téléchargement
     for i in range(50,nb_element_max,50):
         response = requests.get(url+str(i), allow_redirects=True) #requête en incrémentant 50 au skip
         #Concaténation de chaque requete dans la liste "donnees"
         donnees["data"] = donnees["data"]+response.json()["data"]
+
+        os.system('cls' if system_name().lower()=='windows' else 'clear')
+        progression = round(i*100/nb_element_max,2)
+        print(f"Catégorie {categorie} extraite à : {progression} %\n")
+        
     donnees.pop("skip")
     donnees.pop("limit")
     return donnees
