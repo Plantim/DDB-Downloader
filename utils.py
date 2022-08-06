@@ -1,9 +1,6 @@
-from unittest.case import doModuleCleanups
 import requests #pour requête web
-import os #pour créer un dossier + clear la fenêtre
 from platform   import system as system_name  # Returns the system/OS name
 import os #permet d'utiliser des commandes, sert pour clear_screen
-from tqdm import tqdm #pour afficher la progression
 
 class Colored():
 
@@ -31,16 +28,12 @@ class Colored():
             print(ERROR + string)
         return ERROR + string
 
-#Efface l'écran peu importe l'OS
-def clear_screen():
-    os.system('cls' if system_name().lower()=='nt' else 'clear')
-
 #Vérifie l'entrée
 def check_categorie(CAT):
     colored = Colored()
     categorie = input("Ecrire la catégorie à collecter ou 'all' pour toutes les récupérer : ")
     while categorie not in CAT and categorie != "all":
-        clear_screen()
+        os.system('cls' if system_name().lower()=='nt' else 'clear')
         colored.ERROR("La catégorie demandée n'est pas dans la liste ou est mal écrite.\n")
         print(*CAT, sep = ", ") #sépare les éléments avec des virgules
         print('\n')
@@ -50,24 +43,16 @@ def check_categorie(CAT):
 
 
 #Télécharge les json de la catégorie
-def download_json(url,nb_element_max):
+def download_json(url,nb_element_max,donnees):
     #Liste pour la fusion json
-    donnees=[] 
-    
     #Téléchargement
-    for i in range(0,nb_element_max,50):
-        requete = requests.get(url+str(i), allow_redirects=True) #requête en incrémentant 50 au skip
+    for i in range(50,nb_element_max,50):
+        response = requests.get(url+str(i), allow_redirects=True) #requête en incrémentant 50 au skip
         #Concaténation de chaque requete dans la liste "donnees"
-        for key in requete.json()["data"]:
-            donnees.append(key)
+        donnees["data"] = donnees["data"]+response.json()["data"]
+    donnees.pop("skip")
+    donnees.pop("limit")
     return donnees
-
-#fusionne tous les json
-def fusion_json(nb_element_max,donnees):
-    finaljson={}
-    finaljson["total"]=nb_element_max
-    finaljson["data"]=donnees
-    return finaljson
 
 
 #affiche un message de fin
