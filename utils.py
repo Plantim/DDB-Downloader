@@ -33,7 +33,7 @@ def check_categorie(CAT):
     colored = Colored()
     categorie = input("Ecrire la catégorie à collecter ou 'all' pour toutes les récupérer : ")
     while categorie not in CAT and categorie != "all":
-        os.system('cls' if system_name().lower()=='nt' else 'clear')
+        os.system('cls' if system_name().lower()=='windows' else 'clear')
         colored.ERROR("La catégorie demandée n'est pas dans la liste ou est mal écrite.\n")
         print(*CAT, sep = ", ") #sépare les éléments avec des virgules
         print('\n')
@@ -53,7 +53,6 @@ def download_json(url,nb_element_max,donnees):
     donnees.pop("skip")
     donnees.pop("limit")
     return donnees
-
 
 #affiche un message de fin
 def message_fin(len_finaljson,categorie,compteur_all_categorie = 0):
