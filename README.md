@@ -3,7 +3,26 @@ Script python pour télécharger la base de donnée de Dofusdb.fr
 
 ## Pré-requis
 
-Installer pip3 (en cours de simplification)
+Installer la librairie "requests" et "tqdm"
+
+### Utilisateur Windows :
+- Lancer l'invite de commande (touche Windows + R)
+- Ecrire "cmd"
+- Ecrire "pip install request"
+- Ecrire "pip install tqdm"
+
+- s'il est indiqué : 'pip' n'est pas reconnu en tant que commande interne ou externe, un programme exécutable ou un fichier de commandes.
+- Il faudra installer python, 
+- Ecrire "python"
+- Une fenêtre microsoft store s'ouvre, cliquer sur "installer"
+- une fois installé, recommencer les étapes précédentes
+
+
+### Utilisateur MacOS :
+- installer python normalement depuis le site : https://www.python.org/ftp/python/3.10.6/python-3.10.6-macos11.pkg
+- Ecrire "pip install request"
+- Ecrire "pip install tqdm"
+
 
 ## Utilisation
 
