@@ -8,7 +8,7 @@ Installer la librairie "requests" et "tqdm"
 ### Utilisateur Windows :
 - Lancer l'invite de commande (touche Windows + R)
 - Ecrire "cmd"
-- Ecrire "pip install request"
+- Ecrire "pip install requests"
 - Ecrire "pip install tqdm"
 
 - s'il est indiqué : 'pip' n'est pas reconnu en tant que commande interne ou externe, un programme exécutable ou un fichier de commandes.
