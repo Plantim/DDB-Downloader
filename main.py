@@ -25,7 +25,7 @@ def run(categorie):
     url = "https://api.dofusdb.fr/" + categorie + "?$limit=50&$skip=" #reconstitue l'url
     donnees = requests.get(url).json()
     nb_element_max = donnees["total"] #Détermine le nombre d'élément max dans la catégorie choisie
-    finaljson = download_json(url,nb_element_max,donnees) #Télécharge les json de la catégorie
+    finaljson = download_json(url,nb_element_max,donnees,categorie) #Télécharge les json de la catégorie
     #Crée un dossier output s'il n'existe pas
     if not os.path.exists(output_path):
         os.makedirs(output_path)
@@ -43,7 +43,7 @@ if __name__ == '__main__':
         len_finaljson = run(categorie)        
         message_fin(len_finaljson,categorie) #affiche un message de fin
     else:
-        for i_categorie in tqdm(range(len(CAT))):
+        for i_categorie in tqdm(range(len(CAT)), desc="all"):
             len_finaljson = run(CAT[i_categorie])
         message_fin(len_finaljson,categorie,len(CAT)) #affiche un message de fin
         

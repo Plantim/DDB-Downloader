@@ -44,10 +44,10 @@ def check_categorie(CAT):
 
 
 #Télécharge les json de la catégorie
-def download_json(url,nb_element_max,donnees):
+def download_json(url,nb_element_max,donnees,categorie):
     #Liste pour la fusion json
     #Téléchargement
-    for i in tqdm(range(50,nb_element_max,50), leave=False):
+    for i in tqdm(range(50,nb_element_max,50), desc=categorie, leave=False):
         response = requests.get(url+str(i), allow_redirects=True) #requête en incrémentant 50 au skip
         #Concaténation de chaque requete dans la liste "donnees"
         donnees["data"] = donnees["data"]+response.json()["data"]
