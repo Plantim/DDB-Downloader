@@ -1,7 +1,7 @@
 #Author : Plantim
 #Contributors : Iooray, Cleaver
-#Version : 1.1
-#Description : Ce script télécharge la base de donnée de Dofusdb.fr
+#Version : 1.2
+#Description : Ce script télécharge la base de données de Dofusdb.fr
 
 import json
 import sys
