@@ -1,6 +1,6 @@
 #Author : Plantim
-#BIG Contributor : Iooray
-#Version : 1.0
+#Contributors : Iooray, Cleaver
+#Version : 1.1
 #Description : Ce script télécharge la base de donnée de Dofusdb.fr
 
 import json
