@@ -1,6 +1,7 @@
 import requests #pour requête web
 from platform   import system as system_name  # Returns the system/OS name
 import os #permet d'utiliser des commandes, sert pour clear_screen
+from tqdm import tqdm
 
 class Colored():
 
@@ -43,20 +44,13 @@ def check_categorie(CAT):
 
 
 #Télécharge les json de la catégorie
-def download_json(url,nb_element_max,donnees,categorie):
+def download_json(url,nb_element_max,donnees):
     #Liste pour la fusion json
     #Téléchargement
-    for i in range(50,nb_element_max,50):
+    for i in tqdm(range(50,nb_element_max,50), leave=False):
         response = requests.get(url+str(i), allow_redirects=True) #requête en incrémentant 50 au skip
         #Concaténation de chaque requete dans la liste "donnees"
         donnees["data"] = donnees["data"]+response.json()["data"]
-
-        os.system('cls' if system_name().lower()=='windows' else 'clear')
-        progression = round(i*100/nb_element_max,2)
-        print(f"Catégorie {categorie} extraite à : {progression} %\n")
-    
-    os.system('cls' if system_name().lower()=='windows' else 'clear')
-    
     donnees.pop("skip")
     donnees.pop("limit")
     return donnees
@@ -70,4 +64,4 @@ def message_fin(len_finaljson,categorie,compteur_all_categorie = 0):
         colored.OK(f"{compteur_all_categorie} fichiers json ont été créés dans le dossier output\n")
     else:
         colored.OK(f"Il y a {len_finaljson} éléments dans le fichier {categorie}.json !")
-
+    input()
