@@ -24,7 +24,9 @@ Installer les librairies "requests" et "tqdm"
 
 Démarer le main.py
 
-Entrer le nom d'une catégorie présente dans la liste (ci-dessous) ou écrire "all" pour toutes les télécharger.
+2 options :
+- Entrer le nom d'une catégorie présente dans l'une des listes (ci-dessous)
+- Entrer "all_endpoints" ou "all_supertypes" pour télécharger tous les éléments de la catégorie correspondante.
 
 ## Fonctionnement
 
@@ -34,6 +36,7 @@ Les fichiers json seront enregistrés dans le dossier "output" (modifiable dans 
 
 ## Liste des catégories prises en charge
 
+### Liste des Endpoints
 - achievements
 - achievement-categories
 - achievement-objectives
@@ -97,3 +100,29 @@ Les fichiers json seront enregistrés dans le dossier "output" (modifiable dans 
 - skills
 - titles
 - worlds
+
+### Liste des Supertypes
+- amulette
+- arme
+- anneau
+- ceinture
+- bottes
+- consommable
+- bouclier
+- ressource
+- chapeau
+- cape
+- montilier_familier
+- dofus_spot
+- event_quete
+- mutation
+- nouriture_boost
+- benediction
+- malediction
+- rp_buff
+- suiveur
+- apparat
+- compagnon
+- harnachement
+- costume
+- monture
