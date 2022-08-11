@@ -1,10 +1,10 @@
-import requests #pour requête web
-from platform   import system as system_name  # Returns the system/OS name
-import os #permet d'utiliser des commandes, sert pour clear_screen
+import requests
+from platform   import system as system_name
+import os
 from tqdm import tqdm
 
 class Colored():
-
+    """Sert à ajouter de la couleur"""
     def __init__(self, print_bool=True):
         self.have_to_print = print_bool
         self.green = "\033[1;32m"
@@ -29,34 +29,32 @@ class Colored():
             print(ERROR + string)
         return ERROR + string
 
-#Vérifie l'entrée
-def check_categorie(CAT):
+def check_categorie(CAT_E,CAT_S):
+    """Vérifie l'entrée de la catégorie"""
     colored = Colored()
-    categorie = input("Ecrire la catégorie à collecter ou 'all' pour toutes les récupérer : ")
-    while categorie not in CAT and categorie != "all":
+    categorie = input("2 options :\n- Ecrire la catégorie à collecter.\n- Ecrire 'all_endpoints' ou 'all_supertypes' pour récupérer toutes les catégories associées.\n\nChoix : ")
+    while categorie not in CAT_E and categorie not in CAT_S and categorie != "all_endpoints" and categorie != "all_supertypes":
         os.system('cls' if system_name().lower()=='windows' else 'clear')
         colored.ERROR("La catégorie demandée n'est pas dans la liste ou est mal écrite.\n")
-        print(*CAT, sep = ", ") #sépare les éléments avec des virgules
+        print(*CAT_E, sep = ", ")
         print('\n')
-        categorie = input("Ecrire la catégorie à collecter ou 'all' pour toutes les récupérer : ") #Demande la catégorie à extraire
+        print(*CAT_S, sep = ", ")
+        print('\n')
+        categorie = input("2 options :\n- Ecrire la catégorie à collecter.\n- Ecrire 'all_endpoints' ou 'all_supertypes' pour récupérer toutes les catégories associées.\n\nChoix : ")
     return categorie
 
-
-
-#Télécharge les json de la catégorie
 def download_json(url,nb_element_max,donnees,categorie):
-    #Liste pour la fusion json
-    #Téléchargement
-    for i in tqdm(range(50,nb_element_max,50), desc=categorie, leave=False):
-        response = requests.get(url+str(i), allow_redirects=True) #requête en incrémentant 50 au skip
-        #Concaténation de chaque requete dans la liste "donnees"
-        donnees["data"] = donnees["data"]+response.json()["data"]
+    """Télécharge les json de la catégorie"""
+    for i in tqdm(range(50,nb_element_max,50), desc=categorie, leave=False): #commence à 50 car une 1er requête à 0 a été effectuée pour recup le nb_elem_max
+        response = requests.get(url+str(i), allow_redirects=True) 
+        donnees["data"] = donnees["data"]+response.json()["data"] #Concaténation de chaque requete dans la liste "donnees"
     donnees.pop("skip")
     donnees.pop("limit")
     return donnees
 
-#affiche un message de fin
+
 def message_fin(len_finaljson,categorie,compteur_all_categorie = 0):
+    """affiche un message de fin"""
     colored = Colored()
     colored.OK("L'opération s'est déroulée avec succès.")
 
@@ -64,4 +62,13 @@ def message_fin(len_finaljson,categorie,compteur_all_categorie = 0):
         colored.OK(f"{compteur_all_categorie} fichiers json ont été créés dans le dossier output\n")
     else:
         colored.OK(f"Il y a {len_finaljson} éléments dans le fichier {categorie}.json !")
-    input()
+
+def check_recommencer():
+    """Vérifie s'il faut recommencer le programme"""
+    colored = Colored()
+    recommencer = input("\nRécupérer une autre catégorie ? (y/n) : ")
+    while recommencer != "y" and recommencer != "n":
+        os.system('cls' if system_name().lower()=='windows' else 'clear')
+        colored.ERROR("L'entrée n'est pas correcte.\n")
+        recommencer = input("Récupérer une autre catégorie ? (y/n) : ") 
+    return recommencer
