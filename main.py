@@ -1,49 +1,44 @@
-#Author : Plantim
-#BIG Contributor : Iooray
-#Version : 1.0
 #Description : Ce script télécharge la base de donnée de Dofusdb.fr
-
 import json
-import sys
 import configparser
 from utils import * #permet de faire des opérations sur les fichiers
 from tqdm import tqdm
+import aiohttp
+import asyncio
 
-config = configparser.ConfigParser()
-config.read('config.ini')
-CAT = config['dofusdb.fr']['categories'].split(',') #Liste des catégories
-output_path = config['DEFAULT']['output_path'] #Chemin du dossier output
-categorie = config['DEFAULT']['categorie'] #Catégorie à extraire
+async def run(categorie):
+    url = "https://api.dofusdb.fr/" + categorie + "?$limit=50&$skip="
+    connector = aiohttp.TCPConnector(ssl=False)
+    async with aiohttp.ClientSession(connector=connector) as session:
+        async with session.get(url) as response:
+            donnees = await response.json()
+        nb_element_max = donnees["total"]
+        finaljson = await download_json_async(session, url, nb_element_max, donnees)
 
-
-def run(categorie):
-    """
-    Fonction principale
-    categorie : catégorie à extraire list
-    output : longueur du json int
-    """
-    url = "https://api.dofusdb.fr/" + categorie + "?$limit=50&$skip=" #reconstitue l'url
-    donnees = requests.get(url).json()
-    nb_element_max = donnees["total"] #Détermine le nombre d'élément max dans la catégorie choisie
-    finaljson = download_json(url,nb_element_max,donnees) #Télécharge les json de la catégorie
-    #Crée un dossier output s'il n'existe pas
     if not os.path.exists(output_path):
         os.makedirs(output_path)
-    f=open("%s.json" % (os.path.dirname(os.path.realpath(sys.argv[0]))+"/"+ output_path + "/" + categorie),"w+")
-    f.write("%s" % str(json.dumps(finaljson))) #json.dumps permet de renvoyer un json avec de vrais guillements
-    f.close()
+
+    with open(f"{output_path}/{categorie}.json", "w+") as f:
+        f.write(json.dumps(finaljson))
+
     return len(finaljson['data'])
 
+async def main(categories, category):
+    if category not in categories and category != "all":
+        category = check_categorie(categories)
+    
+    if category != "all":
+        len_finaljson = await run(category)
+        message_fin(len_finaljson, category)
+    else:
+        for cat in tqdm(categories):
+            len_finaljson = await run(cat)
+        message_fin(len_finaljson, category, len(categories))
+
 if __name__ == '__main__':
-    if (categorie in CAT) or (categorie == "all"): #Vérifie si la catégorie est dans la liste
-        pass
-    else:
-        categorie = check_categorie(CAT) #input manuel
-    if categorie != "all":
-        len_finaljson = run(categorie)        
-        message_fin(len_finaljson,categorie) #affiche un message de fin
-    else:
-        for i_categorie in tqdm(range(len(CAT))):
-            len_finaljson = run(CAT[i_categorie])
-        message_fin(len_finaljson,categorie,len(CAT)) #affiche un message de fin
-        
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    CAT = config['dofusdb.fr']['categories'].split(',') #Liste des catégories
+    output_path = config['DEFAULT']['output_path'] #Chemin du dossier output
+    categorie = config['DEFAULT']['categorie'] #Catégorie à extraire
+    asyncio.run(main(CAT, categorie))
