@@ -1,7 +1,11 @@
-#Description : Ce script télécharge la base de donnée de Dofusdb.fr
+#Author : Plantim
+#Contributors : Iooray, Cleaver
+#Version : 1.4
+#Description : Ce script télécharge la base de données de Dofusdb.fr
+
 import json
 import configparser
-from utils import * #permet de faire des opérations sur les fichiers
+from utils import *
 from tqdm import tqdm
 import aiohttp
 import asyncio
